@@ -1,0 +1,7 @@
+{
+  "name": "WebCarving",
+  "description": "A simple seam carving web platform using Node and a Python backend",
+  "repository": "https://github.com/g3lin/WebCarving",
+  "keywords": ["node", "express","python", "seamcarving"]
+  
+}

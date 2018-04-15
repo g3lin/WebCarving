@@ -1,0 +1,26 @@
+{
+  "name": "webcarving",
+  "version": "0.0.1",
+  "description": "A simple custom file uploader",
+  "engines": {
+    "node": "8.9.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.3",
+    "multer": "^1.1.0"
+  },
+  "devDependencies": {
+    "should": "^7.1.0",
+    "mocha": "^2.3.3",
+    "supertest": "^1.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/g3lin/WebCarving"
+  }
+}
