@@ -38,9 +38,9 @@ app.post('/api',function(req,res){
     // call the multer fonction
     upload(req,res,function(err) {
         if(err) {
-            console.log(err)
-            console.log(req.body);
-            console.log(req.files);
+            // console.log(err)
+            // console.log(req.body);
+            // console.log(req.files);
             return res.end("Error uploading file.");
         }
         console.log(res)

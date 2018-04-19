@@ -1,0 +1,3 @@
+[submodule "python/PyCarving"]
+	path = python/PyCarving
+	url = https://github.com/g3lin/image-python
