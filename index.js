@@ -40,6 +40,11 @@ app.get('/',function(req,res){
       res.sendFile(__dirname + "/public/index.html");
 });
 
+app.get('/result',function(req,res){
+    res.sendFile(__dirname + "/public/result.html");
+});
+
+
 app.post('/api',function(req,res){
     // call the multer fonction
     fs.mkdirSync(__dirname+"/user_uploads/temp");
@@ -60,6 +65,7 @@ app.post('/api',function(req,res){
         fs.rename(__dirname+'/user_uploads/temp', __dirname+'/user_uploads/'+foldername, function (err) {
             if (err) throw err;
             console.log('file is moved');
+            res.send( foldername+"" );
        
 
             var pathSeam = __dirname+'/user_uploads/'+foldername;
@@ -85,7 +91,7 @@ app.post('/api',function(req,res){
             //log exit and use it
             pythonProcess.on('exit', (code) => {
                 console.log("Process quit with code : " + code);
-                res.send( foldername+"/result.bmp");
+                
             });
         });
 
