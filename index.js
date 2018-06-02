@@ -28,7 +28,10 @@ var storage =   multer.diskStorage({
  // fonction principale d'appel pour l'upload
 var upload = multer({ storage : storage }).array('userPhoto',1);
 
-
+//fonction de traitement du pipe des logs python
+var uint8arrayToString = function(data){
+    return String.fromCharCode.apply(null, data);
+};
   
  
   
@@ -39,7 +42,8 @@ app.get('/',function(req,res){
 
 app.post('/api',function(req,res){
     // call the multer fonction
-    fs.mkdirSync("user_uploads/temp");
+    fs.mkdirSync(__dirname+"/user_uploads/temp");
+    fs.mkdirSync(__dirname+"/user_uploads/temp/gif");
 
     upload(req,res,function(err) {
         if(err) {
@@ -48,25 +52,45 @@ app.post('/api',function(req,res){
             // console.log(req.files);
             return res.end("Error uploading file.");
         }
-        console.log(res)
+        //console.log(res)
+        console.log("File is uploaded to temp folder");
+        //res.send("The file is uploaded !");
+    
+        var foldername = Date.now()
+        fs.rename(__dirname+'/user_uploads/temp', __dirname+'/user_uploads/'+foldername, function (err) {
+            if (err) throw err;
+            console.log('file is moved');
+       
 
-        res.end("File is uploaded");
+            var pathSeam = __dirname+'/user_uploads/'+foldername;
+            var modeSeam = req.body.modeSeam;
+            var horizSeam = req.body.horizSeam;
+            var vertiSeam = req.body.vertiSeam;
+            
+            console.log('Python exec is called')
+            var spawn = require("child_process").spawn;
+            var pythonProcess = spawn('python',[__dirname+"/python/PyCarving/main.py", pathSeam+'/orig' , modeSeam, horizSeam , vertiSeam], {cwd: pathSeam});
+
+            //log python messages
+            pythonProcess.stdout.on('data', (data) => {
+                console.log(uint8arrayToString(data));
+            });
+
+            //log python errors
+            pythonProcess.stderr.on('data', (data) => {
+                // As said before, convert the Uint8Array to a readable string.
+                console.log(uint8arrayToString(data));
+            });
+
+            //log exit and use it
+            pythonProcess.on('exit', (code) => {
+                console.log("Process quit with code : " + code);
+                res.send( foldername+"/result.bmp");
+            });
+        });
+
+        
     });
-    var foldername = Date.now()
-    fs.rename(__dirname+'user_uploads/temp', __dirname+'user_uploads/'+foldername, function (err) {
-        if (err) throw err;
-        console.log('renamed complete');
-      });
-
-    var pathSeam = __dirname+'user_uploads/'+foldername;
-    var modeSeam = request.body.modeSeam;
-    var horizSeam = 10;
-    var vertiSeam = 10;
-
-    var spawn = require("child_process").spawn;
-    var pythonProcess = spawn('python',[__dirname+"python/PyCarving/main.py", pathSeam , modeSeam, horizSeam , vertiSeam], "cwd:" + pathseam);
-    res.sendFile(__dirname + pathSeam+"/result.bmp");
-
     
 });
 
