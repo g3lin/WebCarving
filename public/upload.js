@@ -11,25 +11,34 @@ $(document).ready(function() {
                 var fileexist = false;
                 //console.log(response+"/result.bmp")
 
-                while(!fileexist){
-                    setTimeout(function () {
-                        if (UrlExists(response+"/result.bmp")){
-                            fileexist = true;
-                        }
-                      }, 5000);
+                WaitForExist(response)
                         
-                }
-                $("#status").empty().text('Fichier traité, redirection ...');
-                window.location.replace("result?id="+response);
+                
+                
            }
    });
    return false;
    });    
 });
 
-function UrlExists(url)
+function WaitForExist(response)
 {
-    var img = new Image();
-    img.src = url;
-    return img.height != 0;
+    var url = response+"/result.bmp"
+    var image = new Image();
+    image.src = url;
+
+    image.onload = function() {
+        // image exists and is loaded
+        $("#status").empty().text('Fichier traité, redirection ...');
+        window.location.replace("result?id="+response);
+    }
+    image.onerror = function() {
+        // image did not load
+        console.log('waiting')
+        setTimeout(function(){WaitForExist(response)},1000);
+        
+       
+    }
+
+    
 }
