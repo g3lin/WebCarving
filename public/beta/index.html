@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>Mini Ajax File Upload Form</title>
+
+		<!-- Google web fonts -->
+		<link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel='stylesheet' />
+
+		<!-- The main CSS file -->
+		<link href="css/style.css" rel="stylesheet" />
+	</head>
+
+	<body>
+
+		<form id="upload" method="post" action="../api" enctype="multipart/form-data" style="text-align: center">
+			<div id="drop">
+				Drop Here
+
+				<a>Browse</a>
+				<input type="file" name="userPhoto" multiple />
+			</div>
+
+			<ul>
+
+			</ul>
+
+			<div>
+					<select name="modeSeam">
+							<option value="0">Retrecir l'image</option>
+							<option value="1">Agrandir l'image</option>
+							<option value="2">Mode meme</option>
+					</select>
+			</div>
+
+			<div>
+					<input type="number" name="horizSeam">
+					<input type="number" name="vertiSeam">
+			</div>
+			<div>
+					<a><input type="submit" value="Uploader" name="submit"></a>
+					<input type='text' style="visibility: hidden;" id='random' name='random'><br>
+					<span id = "status"></span>
+			</div>
+			
+
+		</form>
+
+        
+		<!-- JavaScript Includes -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="js/jquery.knob.js"></script>
+
+		<!-- jQuery File Upload Dependencies -->
+		<script src="js/jquery.ui.widget.js"></script>
+		<script src="js/jquery.iframe-transport.js"></script>
+		<script src="js/jquery.fileupload.js"></script>
+		
+		<!-- Our main JS file -->
+		<script src="js/script.js"></script>
+
+
+
+	</body>
+</html>
